@@ -1,0 +1,35 @@
+extends base
+block seo
+	+h.seo()
+block content
+	#content.content:section#posts.posts-expand
+		for post in posts:article.post.post-type-nomal
+			header.post-header
+				h1.post-title:a.post-title-link(href=post.url)= post.title
+				.post-meta
+					span.post-time
+						span.post-meta-item-icon:i.fa.fa-calendar-o
+                        span.post-meta-item-text 发表于
+                        time(datetime=post.date)= post.date
+					span.post-category
+						| | 
+						span.post-meta-item-icon:i.fa.fa-folder-o
+                        span.post-meta-item-text 分类于
+                        span:a(href=post.category.url,rel="index")= post.category.title
+					span.post-comments-count
+						| | 
+						a(href="{{post.url}}#comments")= post.comments.length
+					span.lerancloud-visitors
+						| | 
+						span.post-meta-item-icon:i.fa.fa-eye
+                        span.post-meta-item-text 阅读次数
+                        span.leancloud-visitors-count= post.visits or 0
+			    .post-body
+			        if post.content.opening 
+			        	+post.content.opening
+			        	.post-more-link.text-center
+			        		a.btn(href=post.url,rel="contents")= '阅读全文 »'
+			        else
+			        	+post.content
+		    footer.post-footer:.post-eof
+	include include/pagination.jade

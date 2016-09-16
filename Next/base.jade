@@ -1,0 +1,81 @@
+html.theme-next.pisces.use-motion
+	head
+		+h.mobile_metas
+		block title
+			title= site.title
+		block seo
+		+h.load('/template/font-awesome.css','/template/main.css','/template/prettify.css')
+	body
+		.container.one-coolumn.siderbar-position-left.page-home
+			.headband
+			header#header.header:.header-inner
+				.site-meta
+					.custom-logog-site-title:a.brand(href="/",rel="start")
+						span.logo-line-before:i
+						span.site-title= site.title
+						span.logo-line-after:i
+					if site.configs.sub_title:p.site-subtitle= site.configs.sub_title
+				.site-nav-toggle:button
+					span.btn-bar
+					span.btn-bar
+					span.btn-bar
+				nav.site-nav
+					ul#menu.menu
+						li.menu-item.menu-item-home.menu-item-active:a(href="/",rel="section")
+							i.menu-item-icon.fa.fa-fw.fa-home
+							|首页
+						li.menu-item.menu-item-archives:a(href="/archive",rel="section")
+							i.menu-item-icon.fa.fa-fw.fa-archive
+							|归档
+						li.menu-item.menu-item-tags:a(href="/tags",rel="section")
+							i.menu-item-icon.fa.fa-fw.fa-archive
+							|标签
+						li.menu-item.menu-item-search:a.popup-trigger(href="#")
+							i.menu-item-icon.fa.fa-fw.fa-search
+							|搜索
+			main#main.main:.main-inner
+				.content-wrap
+					block content
+				.sidebar-toggle:.sidebar-toggle-line-wrap
+					span.sidebar-toggle-line.sidebar-toggle-line-first
+					span.sidebar-toggle-line.sidebar-toggle-line-middle
+					span.sidebar-toggle-line.sidebar-toggle-line-last
+				aside#sidebar.sidebar(style="margin-top:282px;display:block")
+					.sidebar-inner:section.site-overview.sidebar-panel.sidebar-panel-active
+						.site-author
+							img.site-author-image(src=site.configs.avatar)
+							p.site-author-name= site.configs.admin_name
+							p.site-description= site.configs.description
+						nav.site-state
+							.site-state-item.site-state-posts:a(href="/archive")
+								span.site-state-item-count= get_data(return_count=true,with_page=false)
+								span.site-state-item-name 日志
+							.site-state-item.site-state-categories
+								span.site-state-item-count= get_data(type='folder', level=[1,2], return_count=true,min_posts_count=1)
+								span.site-state-item-name 分类
+							.site-state-item.site-state-tags:a(href="/tags")
+								span.site-state-item-count= site.tags.length
+								span.site-state-item-name 标签
+						.feed-link:a(href="/feed")
+							i.fa.fa-rss
+							|RSS
+						.links-of-author
+							socials = [[site.configs.twitter,'Twitter'],[site.configs.weibo,'Weibo'],[site.configs.github,'Github']]
+							for social in socials
+								if social[0]!=''
+									span.links-of-author-item:a(href=social[0])
+										i.fa.fa-fw(class="fa-{{social[1]|lower}}",rel="nofollow")
+										|{{social[1]}}
+			footer#footer.footer:.footer-inner
+				.copyright © 2011 - 2016 {{site.configs.admin_name}}
+				.powered-by
+					|由
+					a.theme-link(href="https://bitcron.com",rel="nofollow") Bitcron
+					|强力驱动
+				.theme-info
+					|主题 - 
+					a.theme-link(href="https://sxlf.org") NexT.Bitcron
+					|- 设计 - 
+					a.theme-link(href="https://github.com/iissnan/hexo-theme-next",rel="nofollow") IIssNan
+			.back-to-top:i.fa.fa-arrw-up
+		+h.load('https://bitcron.com/fb_static/lib/jquery.js','/template/bootstrap.js')

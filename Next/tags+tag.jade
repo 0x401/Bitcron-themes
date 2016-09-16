@@ -1,0 +1,24 @@
+extends base
+is_index = request.path.strip("/")=="tags"
+tag = request.url | replace("https://"+site.domain+"/tag/","")
+block title
+	title="标签 - "+site.title if is_index else "标签："+tag+" - "+site.title
+block seo
+	+h.seo
+block content
+	if is_index
+		#content.content:#posts.posts-expand:.tag-cloud
+			.tag-cloud-title= "目前共计 "+ site.tags.length +" 个标签"
+			.tag-cloud-tags
+				for tag_name, tag_count in site.tags
+					a(href="/tag/{{tag_name|urlencode()}}",style="font-size: {{tag_count*1.5+12 }}px; color: #212121")=tag_name
+	else
+		#content.content:#posts.posts-collapse
+			.collection-title:h2
+				|{{tag}}
+				small 标签
+			for post in posts:article.post.post-type-normal
+				header.post-header
+					h1.post-title:a.post-title-link(href=post.url):span=post.title
+					.post-meta:time.post-time=post.date.format("%m-%d")
+
