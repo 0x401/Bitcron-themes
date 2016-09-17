@@ -1060,11 +1060,6 @@ pre .javascript .function {
     padding-right: 10px;
   }
 }
-@media (min-width: 992px) {
-  .posts-expand .post-body {
-    text-align: justify;
-  }
-}
 .posts-expand .post-body h2,
 .posts-expand .post-body h3,
 .posts-expand .post-body h4,
