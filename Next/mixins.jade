@@ -1,0 +1,10 @@
+mixin make_pagination()
+	nav.pagination
+		if paginator.has_previous or paginator.has_next
+			if paginator.has_previous:a.extend.prev(href=paginator.previous_page_url,rel="prev"):i.fa.fa-angle-left
+			for page in range(1, paginator.total_pages+1)
+				if page == paginator.page
+					span.page-number.current=page
+				else 
+					a.page-number(href="/page/{{page}}")= page
+			if paginator.has_next:a.extend.next(href=paginator.next_page_url,rel="next"):i.fa.fa-angle-right
