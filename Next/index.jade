@@ -1,6 +1,6 @@
 extends base
 block seo
-	+h.seo()
+	+h.seo
 block content
 	#content.content:section#posts.posts-expand
 		for post in posts:article.post.post-type-nomal
@@ -32,4 +32,5 @@ block content
 			        else
 			        	+post.content
 		    footer.post-footer:.post-eof
-	include include/pagination.jade
+	from mixins import make_pagination
+	+make_pagination()
