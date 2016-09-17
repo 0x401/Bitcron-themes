@@ -2,7 +2,7 @@ extends base
 block title
 	title= "文章归档 - "+site.title
 block seo
-	+h.seo()
+	+h.seo
 block content
 	recent_posts = posts.recent_999
 	#content.content:section#posts.posts-collapse
