@@ -27,4 +27,6 @@ block content
 					header.page-header:h1.page-title
 						|"{{request.args.s}}"的搜索结果
 				from mixins import postlist
-				+postlist()	
+				+postlist()
+			if paginator.has_next:#pagination
+				a(href=paginator.next_page_url) 加载更多
