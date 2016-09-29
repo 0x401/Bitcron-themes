@@ -1,0 +1,55 @@
+extends base.jade
+
+block title
+	title= post.title + " - " + site.title
+
+block content
+	#content.site-content
+		#primary.content-area
+			main#main.site-main
+				article.post.post-entry
+					header.entry-header
+						h1.entry-title= post.title
+						hr
+					.entry-content= post.content
+					footer.post-footer
+						if post.tags:.post-tags
+							i.iconfont 
+		    				for tag in post.tags
+		    					a(href="/tag/{{tag}}",rel="tag")= "#"+tag
+		    	section.post-squares.nextprev
+		    		pre_one = posts.previous_one
+		    		next_one = posts.next_one
+		    		if pre_one:a.half.previous(href=pre_one.url,title=pre_one.title,rel="prev")
+		    			.background(style="background-image:url({{pre_one.cover}})")
+		    			span.label Previous Post
+		    			div.info:h3= pre_one.title
+		    		if next_one:a.half.next(href=next_one.url,title=next_one.title,rel="next")
+		    			.background(style="background-image:url({{next_one.cover}})")
+		    			span.label Next Post
+		    			div.info:h3= next_one.title
+
+	section.comments
+		.commentwrap.comments-hidden
+		  .notification
+		    i.iconfont 
+		    |查看评论
+		.comments-main
+			h3#comments-list-title
+				|Comments | 
+				+post.comments.length or 0
+				| 条评论
+			.commentwrap
+				+utils.html_comments(post)
+			comments = get_comments(post)
+			if comments:ul.commentwrap
+			    for comment in comments:li.comment
+			      .comment_body.contents
+			        .profile
+			          a(href=comment.site,rel="nofollow")
+			            img.avatar.avatar-50.photo(alt='', src=comment.email_md5, height='50', width='50'	)
+			        section.commeta
+			          .left:h4.author:a(href=comment.site,rel="nofollow") comment.author
+			          a.comment-reply-link(rel='nofollow', href='#') 回复
+			          .right:.info:time(datetime=comment.date) comment.date('%Y-%m-%d')
+			        .body= comment.content	

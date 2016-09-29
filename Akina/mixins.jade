@@ -1,0 +1,38 @@
+mixin postlist()
+	for post in posts
+		article.post.post-list
+			if post.metadata.app
+				.post-status:.s-content:h1.entry-title.app
+					a(href=post.url,target="_blank")= post.title
+			else
+				.post-entry
+					.feature
+						a(href=post.url)
+							.overlay
+								i.iconfont 
+							img.attachment-post-thumbnail.size-post-thumbnail.wp-post-image(width='150', height='150',src=post.cover or '/template/screenshot-150x150.jpg')
+					h1.entry-title
+						a(href=post.url)= post.title
+					.p-time
+						i.iconfont 
+						|	{{post.date('%Y-%m-%d')}}
+					p
+						|{{post.content(80).plain_text}}...
+					footer.entry-footer
+						.post-more
+							a(href=post.url)
+								i.iconfont 
+						.info-meta
+							.comnum
+								span
+									i.iconfont 
+									a(href='{{post.url}}#comments')
+										post.comments.length
+										| 条评论	 
+							.views
+								span
+									i.iconfont 
+									|	{{post.visits or 0}} 热度
+				hr
+	if paginator.has_next:#pagination
+		a(href=paginator.next_page_url) 加载更多

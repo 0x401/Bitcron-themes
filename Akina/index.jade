@@ -1,0 +1,30 @@
+extends base.jade
+block title
+	title= request.args.s or site.title
+block content
+	#content.site-content
+		if not request.args.s
+			.notice
+				i.iconfont 
+				|	: 
+				.notice-content
+					| {{ site.configs.notice or '感谢体验Akina.Bitcron模板，这段文字可在后台管理里设置哦~'}}
+			is_feature = site.configs.feature
+			if is_feature
+				.top-feature
+					h1.fes-title 焦点
+					.feature-content
+						for feature in is_feature
+							fpost = get_data(url_path=feature)
+							li.feature-1:a(href=fpost.url):.feature-title
+										span.foverlay= fpost.title
+									img(src=fpost.cover or '/template/screenshot.jpg')
+		#primary.content-area
+			main#main.site-main
+				if not request.args.s
+					h1.main-title 近况
+				else
+					header.page-header:h1.page-title
+						|"{{request.args.s}}"的搜索结果
+				from mixins import postlist
+				+postlist()	

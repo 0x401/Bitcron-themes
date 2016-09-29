@@ -1,0 +1,50 @@
+html
+	head
+		+h.headers
+		block title
+			title= site.title
+		+h.load('/template/style.css')
+		_style = site.configs.style or '#93D7F1'
+		style.
+			.post-more i , .author-profile i , .sub-text , .we-info a , span.sitename , #pagination a:hover{ color: {{_style}} }
+			.feature i , .feature-title span , .download , ::-webkit-scrollbar-thumb , .navigator i:hover , .links ul li:before , .ar-time i , span.ar-circle , .object , #progress{ background:{{_style}} }
+			.download , .navigator i:hover , .link-title , .links ul li:hover ,#pagination a:hover { border-color:{{_style}}}
+			.entry-content a:hover , .site-info a:hover , .comment h4 a:hover , .site-top ul li a:hover , .entry-title a:hover , #archives-temp h3 , span.page-numbers.current , .sorry li a:hover ,.site-title a:hover{ color: {{_style}}}
+	body
+		#page.site.wrapper
+			header.site-header.gizle.sabit(role='banner')
+				.site-top
+					.site-branding
+						.site-title
+							a(href='/')
+								img(src='/template/akina3.png')
+					.searchbox
+						i.iconfont.js-toggle-search.iconsearch 
+					.lower
+						nav
+							ul#menu-home-1.menu
+								li
+									a(href='/') 首页
+								li
+									a(href='/archive') 归档
+			.blank
+			block content
+			footer#colophon.site-footer(role='contentinfo')
+				.site-info
+					| Copyright © 2016 {{site.title}}
+					br
+					|由
+					a.theme-link(href="https:bitcron.com",rel="nofollow") Bitcron
+					|强力驱动 主题:
+					a.theme-link(href="https://sxlf.org") Akina.Bitcron
+					| 设计:
+					a.theme-link(href="http://www.akina.pw/themeakina",rel="nofollow") Akina		
+		a.cd-top(href='#')
+		// search start
+		form.js-search.search-form.search-form--modal(method='get', action='/', role='search')
+			.search-form__inner
+				div
+					p.micro.mb- 你想搜索什么...
+					i.iconfont 
+					input.text-input(type='search', name='s', placeholder='搜索...')
+		+h.load('//cdn.bootcss.com/jquery/3.1.1/jquery.min.js','/template/global.js')

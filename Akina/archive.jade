@@ -1,0 +1,24 @@
+extends base.jade
+block content
+	#content.site-content
+	  article.post-item.hentry:#archives-temp
+	      h2 文章归档
+	      recent_posts = posts.recent_999
+	      entries = recent_posts.group('-date:year+month')
+	      for month,posts in entries
+	  		    #archives-content:.archive-title
+	  		        span.ar-time
+	  		          i.iconfont 
+	  		        h3
+	  		        	|{{month[0]}}-{{month[1]}}
+	  		       	#monlist.archives(data-date=post.date)
+	  		       	 for post in posts
+	  		       		   span.ar-circle
+	  		       		   .arrow-left-ar
+	  		       		   .brick
+	  		       		     a(href=post.url)
+	  		       		       span.time
+	  		       		         i.iconfont 
+	  		       		         | {{post.date('%m-%d')}}
+	  		       		       | {{post.title}}
+		

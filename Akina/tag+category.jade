@@ -1,0 +1,14 @@
+extends base.jade
+is_cat = posts.category
+if not is_cat
+	tag = request.url | replace("https://"+site.domain+"/tag/","")
+else
+	cat = posts.category.title
+block title
+	title= "分类："+cat+" - "+site.title if is_cat else "标签："+tag+" - "+site.title
+block content
+	#content.site-content:#primary.content-area
+		main#main.site-main
+				header.page-header:h1.cat-title= cat or tag
+		from mixins import postlist
+		+postlist()

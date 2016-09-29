@@ -1,0 +1,81 @@
+html
+    +account.need_admin()
+    head
+        +h.load('/fb_static/lib/pure.css')
+        title= site.title or '?'
+        +h.mobile_metas
+        +h.load('/fb_static/service/dashboard/dash.css')
+    body
+        {%
+            set dash_parts = [
+                {
+                    'title': 'Site',
+                    'url': '',
+                    'icon_css': 'fa fa-home',
+                    'path': 'configs/site.json',
+                    'fields': ['title', 'sub_title', 'keywords@long_str', 'description@text',
+                            'posts_per_page', 'images_per_page', '-',
+                            'post_content_type', 'post_paragraph_indent','show_toc@bool', 'hide_post_prefix@bool', '-',
+                            'mathjax@bool', 'flowchart@bool', 'echarts@bool',]
+                },
+                {
+                    'title': 'Render',
+                    'url': 'render',
+                    'icon_css': 'fa fa-newspaper-o',
+                    'path': 'configs/render.json',
+                    'fields': ['theme', 'debug_template@bool', '-', 'cache_strategy', 'force_ssl@bool', 'hide_comments@bool', 'inject_template@text#200'],
+                },
+                {
+                    'title': 'Social ID',
+                    'url': 'social',
+                    'icon_css': 'fa fa-user',
+                    'path': 'configs/social.json',
+                    'fields': ['twitter', 'instagram', 'dribbble', 'github', 'quora', 'flickr','weibo', 'facebook', 'vimeo', 'telegram', 'youtube', 'zhihu'],
+                },
+                {
+                    'title': 'Advanced',
+                    'url': 'advanced',
+                    'icon_css': 'fa fa-wrench',
+                    'path': 'configs/advanced.json',
+                    'fields': ['admin_name', 'visitor_password`this is a plaintext password`', '-' , 'utc_offset', 'license_function', 'mail_sender`address from Mail Center`', '-', \
+                        'domains@list#200`domains to bind, one domain per line`', 'subdomain@list#200`render a post under a subdomain`'],
+                },
+
+                {
+                    'title': 'Payment',
+                    'url': 'payment',
+                    'icon_css': 'fa fa-money',
+                    'path': 'configs/payment.json',
+                    'fields': ['paypal_account','paypal_merchant_id', '-' ,\
+                        'alipay_app_id', 'alipay_private_key@text#200`type <auto> to create one private key automaticlly`', 'alipay_public_key@text#100'],
+                },
+                {
+                    'title': 'Akina',
+                    'url': 'akina',
+                    'icon_css': 'fa fa-newspaper-o',
+                    'path': 'configs/akina.json',
+                    'fields': ['notice@long_str','style`16进制颜色值，如#f57676`','feature@list`如果要显示焦点文章，请设置三条文章的url,每行一条`'],
+                },
+            ]
+        %}
+
+        url_path = request.path.split('/')[-1]
+        current_part = dash_parts.filter('url', url_path, return_one=True) or dash_parts[0]
+        
+        .main.pure-g-r
+            .menu.pure-u: .pure-menu.pure-menu-open
+                a.pure-menu-heading.homepage(target='_blank', href='/') Home
+                ul: for part in dash_parts: li
+                    admin_url = "/service/admin/%s"%part.url
+                    if request.args.site_id
+                        admin_url = admin_url + '?site_id=' + request.args.site_id
+                    a(href=admin_url, class="selected" if part.path==current_part.path else "")
+                        i(class=part.icon_css)
+                        span= _(part.title)
+            .container
+                .header
+                    a#logout(href='/logout')
+                        i.fa.fa-power-off
+                        span= _('Logout')
+                +d.config_editor(current_part.path, current_part.fields)
+        +h.load('font')
