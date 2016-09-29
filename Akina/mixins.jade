@@ -34,5 +34,3 @@ mixin postlist()
 									i.iconfont 
 									|	{{post.visits or 0}} 热度
 				hr
-	if paginator.has_next:#pagination
-		a(href=paginator.next_page_url) 加载更多
