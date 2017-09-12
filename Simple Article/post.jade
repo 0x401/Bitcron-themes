@@ -1,43 +1,43 @@
 extends base.jade
 block title
-	title= post.title + " - " + site.title
+    title= post.title + " - " + site.title
 block content
     .container
       .posts:article
-		  .post-meta-date
-		    i.fa.fa-calendar-o
-			.blog-date-day= post.date("%d")
-			.blog-date-month= post.date("%b")
-			.blog-date-year= post.date("%Y")
-			a.post-visits(href="#")
-			  i.fa.fa-heart
-			  span= post.visits or 0
-		  .post-content
-		    .post-title:h1:a(href=post.url,title=post.title)= post.title
+          .post-meta-date
+            i.fa.fa-calendar-o
+            .blog-date-day= post.date("%d")
+            .blog-date-month= post.date("%b")
+            .blog-date-year= post.date("%Y")
+            a.post-visits(href="#")
+              i.fa.fa-heart
+              span= post.visits or 0
+          .post-content
+            .post-title:h1:a(href=post.url,title=post.title)= post.title
             .post-meta
-			  if post.tags
-			    span.post-tags
-				  i.fa.fa-tags
-		          for tag in post.tags
-		            a(href="/tag/{{tag}}",rel="tag")= tag
-			  span.post-category
-			    i.fa.fa-folder-o
+              if post.tags
+                span.post-tags
+                  i.fa.fa-tags
+                  for tag in post.tags
+                    a(href="/tag/{{tag}}",rel="tag")= tag
+              span.post-category
+                i.fa.fa-folder-o
                 a(href=post.category.url,title=post.category.title)= post.category.title
-			  span.post-comment
-			    i.fa.fa-comments-o
-			    a(href="{{post.url}}#comments")=post.comments.length
+              span.post-comment
+                i.fa.fa-comments-o
+                a(href="{{post.url}}#comments")=post.comments.length
             .content= post.content
-		.post-nav:div
-		  pre_one = posts.previous_one
-		  next_one = posts.next_one
-		  if pre_one:a.previous(href=pre_one.url,title=pre_one.title,rel="prev")
-		      i.fa.fa-long-arrow-left
-			  span= pre_one.title
-		  if next_one:a.next(href=next_one.url,title=next_one.title,rel="next")
+        .post-nav:div
+          pre_one = posts.previous_one
+          next_one = posts.next_one
+          if pre_one:a.previous(href=pre_one.url,title=pre_one.title,rel="prev")
+              i.fa.fa-long-arrow-left
+              span= pre_one.title
+          if next_one:a.next(href=next_one.url,title=next_one.title,rel="next")
               span= next_one.title
               i.fa.fa-long-arrow-right
         .post-comments:post.comments_as_html
-	  .sidebar
+      .sidebar
         from mixins import make_siteinfo
         +make_siteinfo()
         from mixins import make_postlike
