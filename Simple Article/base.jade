@@ -1,0 +1,37 @@
+html
+  head
+    +h.headers
+	block title
+		title= site.title
+    +h.load('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css','/template/prettify.css','/template/main.css')
+  body
+    header
+	  .container#nest:.logo
+      nav.container:ul
+        li.index: a(href="/") 首页
+  	    li.iterm: a(href="/category") 分类
+  	    li.iterm: a(href="/archive") 归档
+    block content
+    footer
+	  .container
+        section
+		  h3 Find Me
+		  .site-contact
+		    img.wechat(src="/images/wechat.jpg")
+	    section
+		  h3 Tag Cloud
+	      .site-tags
+		    for tag_name, tag_count in site.tags
+		      a(href="/tag/{{tag_name|urlencode()}}")= tag_name
+		section
+          h3 RECENT POSTS
+		  ul.site-recent-post
+            for post in get_data(type='post',limit=7,with_page=false)
+              li:a(href=post.href,title=post.title)= post.title
+	  .copyright
+	    .container
+		  .copyright-left © Copyright 2014-2017, SXLF.ORG
+		  .copyright-right
+		    |Powered By
+			a(href="https://bitcron.com/?ref=sxlf.org") Bitcron
+    script(src="/template/canvas-nest.js")

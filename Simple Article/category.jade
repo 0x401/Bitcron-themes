@@ -1,0 +1,29 @@
+extends base.jade
+category_title =posts.category.metadata.title or posts.category.title
+category_description =posts.category.metadata.description or site.configs.description
+block title
+	title= '分类：'+category_title+" - "+site.title
+block seo
+	+h.seo(category_title,category_description)
+block content
+    .container
+      .posts
+        nav.category-nav
+		  if posts.category
+		    span:a(class="all",href="/category/")= 'All'
+		  else
+		    span:a(class="all current",href="/category/")= 'All'
+          for category in get_data(type='folder',level=1, min_posts_count=1 ,with_page=False)
+		    if category.path == posts.category.title|lower()
+              span:a(class="iterm current",href="/category/{{ category.path }}")= category.title
+		    else
+              span:a(class="iterm",href="/category/{{ category.path }}")= category.title
+        from mixins import make_article
+        +make_article()	
+	  .sidebar
+        from mixins import make_siteinfo
+        +make_siteinfo()		
+        from mixins import make_postlike
+        +make_postlike()		
+        from mixins import make_ad
+        +make_ad()

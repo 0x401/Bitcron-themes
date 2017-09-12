@@ -1,0 +1,32 @@
+extends base.jade
+is_index = request.path.strip("/")=="tag"
+tag = request.url | replace("https://"+site.domain+"/tag/","")
+block title
+	title="标签 - "+site.title if is_index else "标签："+tag+" - "+site.title
+block seo
+	+h.seo()
+block content
+	if is_index
+	  tag = '标签云'
+    .container.tag= '#'+tag+'#'
+    .container
+	  if is_index
+        +h.load("/template/tagcloud.min.css","/template/tagcloud.min.js")
+        .posts
+          div.tags(style="height:760px;width:760px;")
+            .tagcloud
+              for tag_name, tag_count in site.tags
+                a(href="/tag/{{tag_name|urlencode()}}")= tag_name
+        script
+		  tagcloud({fontsize: 30,radius: 250});				
+      else
+        .posts
+          from mixins import make_article
+          +make_article()	
+	  .sidebar
+        from mixins import make_siteinfo
+        +make_siteinfo()		
+        from mixins import make_cat
+        +make_cat()		
+        from mixins import make_ad
+        +make_ad()
