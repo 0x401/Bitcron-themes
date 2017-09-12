@@ -1,12 +1,12 @@
 extends base.jade
 block title
-	title= site.title
+    title= site.title
 block content
     .container
       .posts
         from mixins import make_article
         +make_article()	
-	  .sidebar
+      .sidebar
         from mixins import make_siteinfo
         +make_siteinfo()		
         from mixins import make_cat
