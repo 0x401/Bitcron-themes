@@ -1,15 +1,15 @@
 extends base.jade
 block title
-	title= "文章归档 - "+site.title
+    title= "文章归档 - "+site.title
 block seo
-	+h.seo()
+    +h.seo()
 block content
     .container
-	  .posts
+      .posts
         recent_posts = posts.recent_999
         .archive-count
           |目前共计
-		  span= recent_posts.length
+          span= recent_posts.length
           |篇日志
         entries = recent_posts.group('-date:year')
         .archive-list
@@ -20,7 +20,7 @@ block content
                 li
                   time.post-time(datetime=post.date,title=post.date)=post.date.format("%m-%d")
                   a(href=post.url):span=post.title
-	  .sidebar
+      .sidebar
         from mixins import make_siteinfo
         +make_siteinfo()		
         from mixins import make_cat
